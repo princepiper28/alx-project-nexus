@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { fetchTrendingMovies } from "../utils/api";
+import { fetchTrendingMovies } from "../lib/tmdb";
 import MovieCard from "../components/MovieCard";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 type Movie = {
   id: number;
@@ -22,6 +24,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+           <Navbar /> 
       {/* Hero Section */}
       <div className="relative h-[60vh] flex flex-col items-center justify-center text-center bg-gradient-to-b from-gray-800 to-gray-900">
         <h1 className="text-4xl font-bold mb-4">🎬 MovieNest</h1>
@@ -42,6 +45,8 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+      
+       <Footer /> 
     </div>
   );
 }
