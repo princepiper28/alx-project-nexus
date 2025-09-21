@@ -21,7 +21,11 @@ export async function fetchMovieDetails(id: string) {
   return fetchMovies(`/movie/${id}`);
 }
 
-// Search movies
+// ✅ Correct search function
 export async function searchMovies(query: string) {
-  return fetchMovies(`/search/movie&query=${encodeURIComponent(query)}`);
+  const res = await fetch(
+    `${API_BASE}/search/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&query=${encodeURIComponent(query)}`
+  );
+  if (!res.ok) throw new Error("Failed to search movies");
+  return res.json();
 }
