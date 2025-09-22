@@ -18,19 +18,28 @@ export default function MovieDetailPage() {
   const { id } = router.query;
 
   const [movie, setMovie] = useState<MovieDetail | null>(null);
-  const { addToFavorites, removeFromFavorites, favorites } = useFavorites();
+
+  // ✅ pull favorites + actions from context
+  const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
 
   useEffect(() => {
     if (!id) return;
     async function loadMovie() {
-      const data = await fetchMovieDetails(id as string);
-      setMovie(data);
+      try {
+        const data = await fetchMovieDetails(id as string);
+        setMovie(data);
+      } catch (error) {
+        console.error("Failed to fetch movie details:", error);
+      }
     }
     loadMovie();
   }, [id]);
 
-  if (!movie) return <p className="text-center text-white">Loading...</p>;
+  if (!movie) {
+    return <p className="text-center text-white">Loading...</p>;
+  }
 
+  // ✅ check if current movie is already a favorite
   const isFavorite = favorites.some((fav) => fav.id === movie.id);
 
   return (
@@ -44,7 +53,7 @@ export default function MovieDetailPage() {
         />
 
         {/* Info */}
-        <div>
+        <div className="flex-1">
           <h1 className="text-3xl font-bold mb-2">{movie.title}</h1>
           <p className="text-gray-400 mb-2">
             📅 {movie.release_date} | ⭐ {movie.vote_average.toFixed(1)}
@@ -63,15 +72,21 @@ export default function MovieDetailPage() {
           </div>
 
           {/* Favorites button */}
-          <button
-            onClick={() =>
-              isFavorite ? removeFromFavorites(movie.id) : addToFavorites(movie)
-            }
-            className="px-4 py-2 bg-red-500 rounded-md hover:bg-red-600 transition"
-          >
-            {isFavorite ? "❤️ Remove from Favorites" : "🤍 Add to Favorites"}
-          </button>
-
+         <button
+         onClick={() =>
+         isFavorite
+         ? removeFromFavorites(movie.id)
+         : addToFavorites({
+          id: movie.id,
+          title: movie.title,
+          poster_path: movie.poster_path,
+          vote_average: movie.vote_average, // ✅ include this
+          })
+        }
+  className="px-4 py-2 bg-red-500 rounded-md hover:bg-red-600 transition"
+>
+  {isFavorite ? "❤️ Remove from Favorites" : "🤍 Add to Favorites"}
+</button>
           {/* Synopsis */}
           <h2 className="text-xl font-semibold mt-6 mb-2">Synopsis</h2>
           <p className="text-gray-300">{movie.overview}</p>

@@ -11,21 +11,29 @@ export async function fetchMovies(endpoint: string) {
   return res.json();
 }
 
-// Fetch trending movies
+// 🔥 Trending movies
 export async function fetchTrendingMovies() {
   return fetchMovies("/trending/movie/week");
 }
 
-// Fetch movie details by ID
+// 🎬 Movie details
 export async function fetchMovieDetails(id: string) {
   return fetchMovies(`/movie/${id}`);
 }
 
-// ✅ Correct search function
+// 🔍 Search movies
 export async function searchMovies(query: string) {
+  if (!query) return { results: [] };
   const res = await fetch(
-    `${API_BASE}/search/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&query=${encodeURIComponent(query)}`
+    `${API_BASE}/search/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&query=${encodeURIComponent(
+      query
+    )}`
   );
   if (!res.ok) throw new Error("Failed to search movies");
   return res.json();
+}
+
+// ✨ Recommended (Top Rated)
+export async function fetchRecommendedMovies() {
+  return fetchMovies("/movie/top_rated");
 }
