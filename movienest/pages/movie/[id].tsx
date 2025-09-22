@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { fetchMovieDetails } from "../../utils/api";
-import { useFavorites } from "../../context/FavoritesContext";
+import { fetchMovieDetails } from "../../lib/tmdb";
+import { useFavorites } from "../../contexts/FavoritesContext";
 
 type MovieDetail = {
   id: number;

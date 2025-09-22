@@ -4,9 +4,15 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
 
-   images: {
-    domains: ["image.tmdb.org"], // ✅ allow TMDb images
-  },
+  images: {
+  remotePatterns: [
+    {
+      protocol: "https",
+      hostname: "image.tmdb.org",
+      pathname: "/t/p/**",
+    },
+  ],
+},
 };
 
 export default nextConfig;
