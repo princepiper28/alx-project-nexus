@@ -1,12 +1,22 @@
 import { useFavorites } from "../contexts/FavoritesContext";
 import MovieCard from "../components/MovieCard";
+import { useRouter } from "next/router";
 
 export default function FavoritesPage() {
-  const { favorites, removeFromFavorites } = useFavorites();
+  const { favorites } = useFavorites();
+  const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
+    <div className="min-h-screen bg-gray-900 text-white p-6 relative">
       <h1 className="text-3xl font-bold mb-6 text-center">❤️ Your Favorites</h1>
+
+      {/* Back Button */}
+      <button
+        onClick={() => router.push("/")}
+        className="absolute top-6 right-6 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-md"
+      >
+         Back
+      </button>
 
       {favorites.length === 0 ? (
         <div className="text-center mt-20">
@@ -20,7 +30,6 @@ export default function FavoritesPage() {
           {favorites.map((movie) => (
             <div key={movie.id} className="relative group">
               <MovieCard movie={movie} />
-
             </div>
           ))}
         </div>
