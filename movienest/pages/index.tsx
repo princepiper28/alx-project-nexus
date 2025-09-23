@@ -44,30 +44,22 @@ export default function HomePage() {
       <Navbar />
 
       {/* Hero Section */}
-      <div
-        className="relative h-[60vh] flex flex-col items-center justify-center text-center bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://image.tmdb.org/t/p/original/9ZlGiEKC5O1d0z6slGX2JcYyJxR.jpg')",
-        }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-60" />
-        <div className="relative z-10">
+      <div className="relative h-[60vh] flex items-center justify-center text-center bg-cover bg-center bg-[url('/images/movienest-bg.png')]">
+       {/* Overlay */}
+       <div className="absolute inset-0 bg-black/50"></div>
+
+        {/* Content */}
+        <div className="relative z-10 flex flex-col items-center">
           <h1 className="text-4xl font-bold mb-4">🎬 MovieNest</h1>
-          <p className="text-lg text-gray-300 mb-6">
-            Find your next favorite movie
-          </p>
-          <form onSubmit={handleSearch}>
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="🔍 Search movies..."
-              className="px-4 py-2 rounded-md text-black w-72"
-            />
-          </form>
+          <p className="text-lg text-gray-300 mb-6">Find your next favorite movie</p>
+          <input
+          type="text"
+          placeholder="🔍 Search movies..."
+          className="px-4 py-2 rounded-md text-black w-72"
+         />
         </div>
       </div>
+
 
       {/* Show Search Results if query is active */}
       {searchResults.length > 0 && (

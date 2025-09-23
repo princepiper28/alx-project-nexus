@@ -11,3 +11,22 @@ body,
 body {
   @apply bg-slate-900 text-slate-100 font-sans;
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused; /* ✅ pause on hover */
+}
+

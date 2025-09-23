@@ -3,7 +3,7 @@ const API_BASE = "https://api.themoviedb.org/3";
 // Generic fetch function
 export async function fetchMovies(endpoint: string) {
   const res = await fetch(
-    `${API_BASE}${endpoint}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+    `${API_BASE}${endpoint}${endpoint.includes("?") ? "&" : "?"}api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
   );
   if (!res.ok) {
     throw new Error(`Failed to fetch ${endpoint}`);

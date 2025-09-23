@@ -20,13 +20,7 @@ export default function FavoritesPage() {
           {favorites.map((movie) => (
             <div key={movie.id} className="relative group">
               <MovieCard movie={movie} />
-              {/* Remove Button */}
-              <button
-                onClick={() => removeFromFavorites(movie.id)}
-                className="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full text-sm opacity-80 hover:opacity-100"
-              >
-                ❌
-              </button>
+
             </div>
           ))}
         </div>
