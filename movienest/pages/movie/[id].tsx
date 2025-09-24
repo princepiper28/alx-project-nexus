@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Image from "next/image"; // ✅ Import Next.js Image
 import { fetchMovieDetails } from "../../lib/tmdb";
 import { useFavorites } from "../../contexts/FavoritesContext";
 
@@ -89,11 +90,15 @@ export default function MovieDetailPage() {
 
       <div className="flex flex-col md:flex-row gap-8">
         {/* Poster */}
-        <img
-          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-          alt={movie.title}
-          className="rounded-lg shadow-lg w-full md:w-1/3"
-        />
+        <div className="relative w-full md:w-1/3 h-[450px]">
+          <Image
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt={movie.title}
+            fill
+            className="rounded-lg shadow-lg object-cover"
+            priority
+          />
+        </div>
 
         {/* Info */}
         <div className="flex-1">
@@ -143,15 +148,18 @@ export default function MovieDetailPage() {
                 key={actor.id}
                 className="flex flex-col items-center text-center"
               >
-                <img
-                  src={
-                    actor.profile_path
-                      ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                      : "/default-avatar.png"
-                  }
-                  alt={actor.name}
-                  className="w-24 h-24 object-cover rounded-full mb-2"
-                />
+                <div className="relative w-24 h-24 mb-2">
+                  <Image
+                    src={
+                      actor.profile_path
+                        ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                        : "/default-avatar.png"
+                    }
+                    alt={actor.name}
+                    fill
+                    className="object-cover rounded-full"
+                  />
+                </div>
                 <p className="font-medium">{actor.name}</p>
                 <p className="text-sm text-gray-400">{actor.character}</p>
               </div>
