@@ -48,78 +48,85 @@ export default function SearchPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6 relative">
-      <h1 className="text-3xl font-bold mb-6 text-center">🔍 Search Movies</h1>
+  <div className="min-h-screen bg-gray-900 text-white p-6 relative">
+    <h1 className="text-3xl font-bold mb-6 text-center">🔍 Search Movies</h1>
 
-      {/* Back Button */}
-      <button
-        onClick={() => router.push("/")}
-        className="absolute top-6 right-6 bg-red-600 hover: text-white px-4 py-2 rounded-lg shadow-md"
-      >
-         Back
-      </button>
+    {/* Back Button */}
+    <button
+      onClick={() => router.push("/")}
+      className="absolute top-6 right-6 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-md"
+    >
+      Back
+    </button>
 
-      {/* Search Bar */}
-      <form
-        onSubmit={handleSearch}
-        className="flex items-center justify-center mb-8"
-      >
-        <input
-          type="text"
-          placeholder="Search for a movie..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="px-4 py-2 rounded-l-md w-64 md:w-96 text-black"
-        />
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-r-md"
-        >
-          Search
-        </button>
-      </form>
-
-      {/* 🎬 Flowing MovieCards (Responsive Marquee) */}
-      {trending.length > 0 && results.length === 0 && (
-        <div className="overflow-hidden whitespace-nowrap mb-10">
+    {/* 🎬 Trending Section */}
+    {trending.length > 0 && results.length === 0 && (
+      <section className="mb-10">
+        <h2 className="text-2xl font-semibold mb-4 text-center">
+          🔥 Trending Now
+        </h2>
+        <div className="overflow-hidden whitespace-nowrap">
           <div
             className="
               inline-flex
-              animate-marquee-fast      /* default: fast for mobile */
+              animate-marquee-fast      /* fast for mobile */
               sm:animate-marquee        /* normal for tablets */
               lg:animate-marquee-slow   /* slower for desktops */
               hover:[animation-play-state:paused] /* ✅ pause on hover */
             "
           >
-            {trending.slice(0, 15).concat(trending.slice(0, 15)).map((movie, i) => (
-              <div key={`${movie.id}-${i}`} className="mx-2 w-40 flex-shrink-0">
-                <MovieCard movie={movie} />
-              </div>
-            ))}
+            {trending
+              .slice(0, 15)
+              .concat(trending.slice(0, 15))
+              .map((movie, i) => (
+                <div key={`${movie.id}-${i}`} className="mx-2 w-40 flex-shrink-0">
+                  <MovieCard movie={movie} />
+                </div>
+              ))}
           </div>
         </div>
-      )}
+      </section>
+    )}
 
-      {/* Results */}
-      {loading && <p className="text-center">Loading...</p>}
+    {/* Search Bar (moved below Trending) */}
+    <form
+      onSubmit={handleSearch}
+      className="flex items-center justify-center mb-8"
+    >
+      <input
+        type="text"
+        placeholder="Search for a movie..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="px-4 py-2 rounded-l-md w-64 md:w-96 text-black"
+      />
+      <button
+        type="submit"
+        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-r-md"
+      >
+        Search
+      </button>
+    </form>
 
-      {!loading && results.length === 0 && query && (
-        <p className="text-center text-gray-400">No results found 😢</p>
-      )}
+    {/* Results */}
+    {loading && <p className="text-center">Loading...</p>}
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-        {results.map((movie) => (
-          <MovieCard
-            key={movie.id}
-            movie={{
-              id: movie.id,
-              title: movie.title,
-              poster_path: movie.poster_path,
-              vote_average: movie.vote_average,
-            }}
-          />
-        ))}
-      </div>
+    {!loading && results.length === 0 && query && (
+      <p className="text-center text-gray-400">No results found 😢</p>
+    )}
+
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      {results.map((movie) => (
+        <MovieCard
+          key={movie.id}
+          movie={{
+            id: movie.id,
+            title: movie.title,
+            poster_path: movie.poster_path,
+            vote_average: movie.vote_average,
+          }}
+        />
+      ))}
     </div>
-  );
-}
+  </div>
+);

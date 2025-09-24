@@ -60,19 +60,18 @@ export default function HomePage() {
         </div>
       </div>
 
-
       {/* Show Search Results if query is active */}
       {searchResults.length > 0 && (
-        <section className="px-6 py-10">
-          <h2 className="text-2xl font-semibold mb-6">
-            🔍 Search Results for "{query}"
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {searchResults.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
-          </div>
-        </section>
+       <section className="px-6 py-10">
+         <h2 className="text-2xl font-semibold mb-6">
+           🔍 Search Results for &quot;{query}&quot;
+         </h2>
+         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+         {searchResults.map((movie) => (
+         <MovieCard key={movie.id} movie={movie} />
+         ))}
+         </div>
+       </section>
       )}
 
       {/* Trending Movies (hide if searching) */}

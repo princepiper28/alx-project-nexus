@@ -67,7 +67,7 @@ movienest/
 
 ##🚀 Getting Started
 1️⃣ Clone the repository
-git clone https://github.com/your-username/movienest.git
+git clone https://github.com/princepiper28/movienest.git
 cd movienest
 
 2️⃣ Install dependencies

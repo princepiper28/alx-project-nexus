@@ -20,6 +20,14 @@ type CastMember = {
   profile_path: string | null;
 };
 
+type Video = {
+  id: string;
+  key: string;
+  name: string;
+  site: string;
+  type: string;
+};
+
 export default function MovieDetailPage() {
   const router = useRouter();
   const { id } = router.query;
@@ -50,8 +58,9 @@ export default function MovieDetailPage() {
           `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
         );
         const videosData = await videosRes.json();
+
         const trailerVideo = videosData.results?.find(
-          (vid: any) => vid.type === "Trailer" && vid.site === "YouTube"
+          (vid: Video) => vid.type === "Trailer" && vid.site === "YouTube"
         );
         setTrailer(trailerVideo ? trailerVideo.key : null);
       } catch (error) {
@@ -75,7 +84,7 @@ export default function MovieDetailPage() {
         onClick={() => router.back()}
         className="absolute top-6 right-6 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-md"
       >
-         Back
+        Back
       </button>
 
       <div className="flex flex-col md:flex-row gap-8">
@@ -172,4 +181,3 @@ export default function MovieDetailPage() {
     </div>
   );
 }
-
